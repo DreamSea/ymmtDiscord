@@ -1,4 +1,4 @@
-package mousehunt;
+package plugin.mousehunt;
 
 public class Mouse {
 	

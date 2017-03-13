@@ -1,7 +1,8 @@
+
 import java.util.List;
 import java.util.Random;
 
-import mousehunt.Mousehunt;
+import plugin.mousehunt.Mousehunt;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventDispatcher;

@@ -1,4 +1,4 @@
-package mousehunt;
+package plugin.mousehunt;
 
 import java.util.ArrayList;
 import java.util.List;

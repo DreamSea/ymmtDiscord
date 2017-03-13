@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-import mousehunt.Hunter;
+import plugin.mousehunt.Hunter;
 
 public class Sandbox {
 
