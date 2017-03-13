@@ -24,6 +24,10 @@ public class Hunter {
 		return name;
 	}
 	
+	public String getId() {
+		return id;
+	}
+	
 	public void addPoints(long points) {
 		this.points += points;
 	}
