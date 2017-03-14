@@ -20,8 +20,10 @@ public class ReaderWriter {
 	public void save(HunterData hunterData) {
 		try {
 			File hunterFile = getHunterFile(hunterData.getName(), hunterData.getId());
-			File backup = new File(hunterFile.getPath()+".old");
-			Files.copy(hunterFile.toPath(), backup.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			if (Files.exists(hunterFile.toPath())) {
+				File backup = new File(hunterFile.getPath()+".old");
+				Files.copy(hunterFile.toPath(), backup.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			}
 			
 			JAXBContext jc = JAXBContext.newInstance(HunterData.class);
 			Marshaller marshaller = jc.createMarshaller();
