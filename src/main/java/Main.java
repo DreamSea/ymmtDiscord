@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Random;
 
 import plugin.mousehunt.Mousehunt;
+import plugin.mousehunt.data.ReaderWriter;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventDispatcher;
@@ -18,7 +19,7 @@ import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
 
 public class Main {
-	private static Mousehunt mousehunt = new Mousehunt();
+	private static Mousehunt mousehunt = new Mousehunt(new ReaderWriter());
 	
 	public static void main(String[] args) throws DiscordException, RateLimitException {
 		IDiscordClient client = createClient(args[0]);

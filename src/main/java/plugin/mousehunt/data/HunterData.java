@@ -45,4 +45,9 @@ public class HunterData {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return "HunterData [points=" + points + ", gold=" + gold + ", name=" + name + ", id=" + id + "]";
+	}
 }

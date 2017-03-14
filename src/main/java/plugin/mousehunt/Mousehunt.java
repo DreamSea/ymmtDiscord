@@ -3,6 +3,9 @@ package plugin.mousehunt;
 import java.util.Map;
 import java.util.TreeMap;
 
+import plugin.mousehunt.data.HunterData;
+import plugin.mousehunt.data.ReaderWriter;
+
 public class Mousehunt {
 
 	private long lasthunt = 0;
@@ -14,7 +17,11 @@ public class Mousehunt {
 	
 	private Location meadow;
 	
-	public Mousehunt() {
+	private ReaderWriter readerWriter;
+	
+	public Mousehunt(ReaderWriter readerWriter) {
+		this.readerWriter = readerWriter;
+		
 		meadow = new Location("Meadow");
 		meadow.addMouse(new Mouse("White Mouse", 100, 70, 1.0), 10);
 		meadow.addMouse(new Mouse("Brown Mouse", 150, 115, 0.75), 10);
@@ -65,7 +72,8 @@ public class Mousehunt {
 	
 	private Hunter getHunter(String name, String id) {
 		if (!hunters.containsKey(name+"."+id)) {
-			hunters.put(name+"."+id, new Hunter(name, id));
+			HunterData data = readerWriter.load(name, id);
+			hunters.put(name+"."+id, new Hunter(data));
 		}
 		return hunters.get(name+"."+id);
 	}
@@ -74,6 +82,7 @@ public class Mousehunt {
 		for (Hunter h : hunters.values()) {
 			System.out.println(h.getStats());
 			System.out.println("====");
+			h.save(readerWriter);
 		}	
 	}
 }

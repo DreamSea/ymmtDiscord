@@ -1,19 +1,17 @@
 package plugin.mousehunt;
 
+import plugin.mousehunt.data.HunterData;
+import plugin.mousehunt.data.ReaderWriter;
+
 public class Hunter {
 	
 	private long lastActive = 0;
 	private long lastRequest = 0;
 	
-	private long points = 0;
-	private long gold = 0;
+	private HunterData data;
 	
-	private String name;
-	private String id;
-	
-	public Hunter(String name, String id) {
-		this.name = name;
-		this.id = id;
+	public Hunter(HunterData data) {
+		this.data = data;
 	}
 	
 	public boolean isActive() {
@@ -21,32 +19,32 @@ public class Hunter {
 	}
 	
 	public String getName() {
-		return name;
+		return data.getName();
 	}
 	
 	public String getId() {
-		return id;
+		return data.getId();
 	}
 	
 	public void addPoints(long points) {
-		this.points += points;
+		data.setPoints(data.getPoints() + points);
 	}
 	
 	public void addGold(long gold) {
-		this.gold += gold;
+		data.setGold(data.getGold() + gold);
 	}
 	
 	public String getDisplayGold() {
-		return String.valueOf(gold);
+		return String.valueOf(data.getGold());
 	}
 	
 	public String getDisplayPoints() {
-		return String.valueOf(points);
+		return String.valueOf(data.getPoints());
 	}
 	
 	public String getStats() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Hunter: "+name+" (#"+id+")\n");
+		sb.append("Hunter: "+getName()+" (#"+getId()+")\n");
 		sb.append("\n");
 		sb.append("Points: "+getDisplayPoints()+"\n");
 		sb.append("Gold: "+getDisplayGold()+"\n");
@@ -59,6 +57,7 @@ public class Hunter {
 		return sb.toString();
 	}
 	
-	
-	
+	public void save(ReaderWriter readerWriter) {
+		readerWriter.save(data);
+	}
 }
