@@ -9,6 +9,7 @@ import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventDispatcher;
 import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
+import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
@@ -47,33 +48,43 @@ public class Main {
 					}
 				}
 				
-				if (!message.getChannel().getName().equals("discorddungeon")) {
+				IChannel channel = message.getChannel();
+				
+				// only pay attention to discorddungeon channel
+				if (!channel.getName().equals("discorddungeon")) {
 					return;
 				}
 				
-				String result = mousehunt.process(message.getAuthor().getName(), message.getAuthor().getDiscriminator(), message.getContent());
+				String authorName = message.getAuthor().getName();
+				String authorDisc = message.getAuthor().getDiscriminator();
+				String content = message.getContent();
+				
+				String result = mousehunt.process(authorName, authorDisc, content);
 				if (result != null) {
-					try {
-						message.getChannel().sendMessage(result);
-					} catch (MissingPermissionsException | RateLimitException | DiscordException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					logMessage(authorName, authorDisc, content);
+					sendMessage(channel, result);
 				}
 				
-				if (message.getContent().equals(".poke")) {
-					try {
-						List<IEmoji> emojiList = message.getGuild().getEmojis();
-						System.out.println(emojiList.size());
-						IEmoji emoji = emojiList.get(r.nextInt(emojiList.size()));
-						message.getChannel().sendMessage(emoji.toString());
-					} catch (MissingPermissionsException e) {
-						e.printStackTrace();
-					} catch (RateLimitException e) {
-						e.printStackTrace();
-					} catch (DiscordException e) {
-						e.printStackTrace();
-					}
+				if (content.equals(".poke")) {
+					List<IEmoji> emojiList = message.getGuild().getEmojis();
+					IEmoji emoji = emojiList.get(r.nextInt(emojiList.size()));
+
+					logMessage(authorName, authorDisc, content);
+					sendMessage(channel, emoji.toString());
+				}
+			}
+			
+			private void logMessage(String authorName, String authorDisc, String content) {
+				System.out.println("   >>>"+authorName+"."+authorDisc+": "+content);
+			}
+			
+			private void sendMessage(IChannel channel, String toSend) {
+				try {
+					System.out.println("<<<   "+toSend);
+					channel.sendMessage(toSend);
+				} catch (MissingPermissionsException | RateLimitException | DiscordException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 
