@@ -1,8 +1,12 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
 import org.junit.Test;
 
 import plugin.mousehunt.Hunter;
 import plugin.mousehunt.data.HunterData;
 import plugin.mousehunt.data.ReaderWriter;
+import plugin.mousehunt.mice.EIndigenousMice;
 
 // not actual tests.
 public class Sandbox {
@@ -31,7 +35,7 @@ public class Sandbox {
 		readWriter.save(data);
 	}
 	
-	@Test
+//	@Test
 	public void testLoad() {
 		ReaderWriter readWriter = new ReaderWriter();
 		HunterData data = readWriter.load("CaCt", "1234");
@@ -43,5 +47,24 @@ public class Sandbox {
 		System.out.println(data.getPoints());
 		
 		readWriter.save(data);
+	}
+	
+	@Test
+	public void catchRates() {
+		EIndigenousMice[] mice = EIndigenousMice.values();
+		Arrays.sort(mice, new Comparator<EIndigenousMice>() {
+			@Override
+			public int compare(EIndigenousMice eMouse1, EIndigenousMice eMouse2) {
+				return (int) (eMouse1.getMouse().getPower() -  eMouse2.getMouse().getPower());
+			}
+		});
+		
+		for (EIndigenousMice eMouse : mice) {
+			System.out.println(eMouse.getMouse().getName()+" - "+eMouse.getMouse().getPower());
+			System.out.println("2650/12: "+eMouse.getMouse().getCatchRate(2650, 12));
+			System.out.println("400/1: "+eMouse.getMouse().getCatchRate(400, 1));
+			System.out.println("105/2: "+eMouse.getMouse().getCatchRate(105, 2));
+			System.out.println();
+		}
 	}
 }

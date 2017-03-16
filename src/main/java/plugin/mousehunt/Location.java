@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import plugin.mousehunt.mice.IMice;
+import plugin.mousehunt.mice.Mouse;
+
 public class Location {
 	
 	private Random r;
@@ -20,9 +23,9 @@ public class Location {
 		return name;
 	}
 	
-	public void addMouse(Mouse m, int count) {
+	public void addMouse(IMice m, int count) {
 		for (int i = 0; i < count; i++) {
-			population.add(m);
+			population.add(m.getMouse());
 		}
 	}
 	

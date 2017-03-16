@@ -5,6 +5,8 @@ import java.util.TreeMap;
 
 import plugin.mousehunt.data.HunterData;
 import plugin.mousehunt.data.ReaderWriter;
+import plugin.mousehunt.mice.EIndigenousMice;
+import plugin.mousehunt.mice.Mouse;
 
 public class Mousehunt {
 
@@ -23,10 +25,10 @@ public class Mousehunt {
 		this.readerWriter = readerWriter;
 		
 		meadow = new Location("Meadow");
-		meadow.addMouse(new Mouse("White Mouse", 100, 70, 1.0), 10);
-		meadow.addMouse(new Mouse("Brown Mouse", 150, 115, 0.75), 10);
-		meadow.addMouse(new Mouse("Grey Mouse", 125, 90, 0.75), 10);
-		meadow.addMouse(new Mouse("Spotted Mouse", 175, 175, 0.5), 10);
+		meadow.addMouse(EIndigenousMice.WHITE, 2);
+		meadow.addMouse(EIndigenousMice.BROWN, 2);
+		meadow.addMouse(EIndigenousMice.GREY, 2);
+		meadow.addMouse(EIndigenousMice.DWARF, 1);
 		
 		hunters = new TreeMap<String, Hunter>();
 	}
@@ -50,7 +52,7 @@ public class Mousehunt {
 		StringBuilder sb = new StringBuilder();
 		for (Hunter h : hunters.values()) {
 			Mouse m = meadow.getMouse();
-			if (Math.random() < m.getCatchRate()) {
+			if (Math.random() < m.getCatchRate(105, 2)) {
 				sb.append(h.getName()+" caught a "+m.getName()+" worth "+m.getPoints()+" points and "+m.getGold()+" gold.\n");
 				h.addGold(m.getGold());
 				h.addPoints(m.getPoints());
