@@ -7,6 +7,9 @@ import plugin.mousehunt.Hunter;
 import plugin.mousehunt.data.HunterData;
 import plugin.mousehunt.data.ReaderWriter;
 import plugin.mousehunt.mice.EIndigenousMice;
+import plugin.mousehunt.setup.ECheese;
+import plugin.mousehunt.setup.Setup;
+import plugin.mousehunt.setup.weapon.EWeapon;
 
 // not actual tests.
 public class Sandbox {
@@ -38,18 +41,19 @@ public class Sandbox {
 //	@Test
 	public void testLoad() {
 		ReaderWriter readWriter = new ReaderWriter();
-		HunterData data = readWriter.load("CaCt", "1234");
-		data.setGold(11400);
+		HunterData data = readWriter.load("Cat", "1234");
 		
 		System.out.println(data.getName());
 		System.out.println(data.getId());
 		System.out.println(data.getGold());
 		System.out.println(data.getPoints());
 		
-		readWriter.save(data);
+		System.out.println(data.getWeapon());
+		
+//		readWriter.save(data);
 	}
 	
-	@Test
+//	@Test
 	public void catchRates() {
 		EIndigenousMice[] mice = EIndigenousMice.values();
 		Arrays.sort(mice, new Comparator<EIndigenousMice>() {
@@ -66,5 +70,22 @@ public class Sandbox {
 			System.out.println("105/2: "+eMouse.getMouse().getCatchRate(105, 2));
 			System.out.println();
 		}
+	}
+	
+	@Test
+	public void cheese() {
+
+		System.out.println(ECheese.valueOf("CHEDDAR"));
+		Setup setup = new Setup(new HunterData());
+		
+		System.out.println(setup.getTotalPower());
+		System.out.println(setup.getLuck());
+		
+		Hunter hunter = new Hunter(new HunterData());
+		hunter.addGold(1012314);
+		System.out.println("~~~");
+		System.out.println(hunter.getStats());
+		System.out.println("~~~");
+		System.out.println(hunter.getSetup());
 	}
 }

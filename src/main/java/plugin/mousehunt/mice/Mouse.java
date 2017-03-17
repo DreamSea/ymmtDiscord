@@ -46,7 +46,7 @@ public class Mouse {
 		return powerResist;
 	}
 	
-	public double getCatchRate(long trapPower, long luck) {
+	public double getCatchRate(double trapPower, long luck) {
 		// 3-eff
 		double powerFactor = (trapPower*1.0);
 		double luckFactor = (3 - 1.0) * (1.0 * luck) * (1.0 * luck);

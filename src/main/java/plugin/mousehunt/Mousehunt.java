@@ -52,7 +52,7 @@ public class Mousehunt {
 		StringBuilder sb = new StringBuilder();
 		for (Hunter h : hunters.values()) {
 			Mouse m = meadow.getMouse();
-			if (Math.random() < m.getCatchRate(105, 2)) {
+			if (Math.random() < m.getCatchRate(h.getTotalPower(), h.getLuck())) {
 				sb.append(h.getName()+" caught a "+m.getName()+" worth "+m.getPoints()+" points and "+m.getGold()+" gold.\n");
 				h.addGold(m.getGold());
 				h.addPoints(m.getPoints());
@@ -68,6 +68,8 @@ public class Mousehunt {
 			return hunt(getHunter(name, id));
 		} else if (content.equals(".stats")) {
 			return "```http\n"+getHunter(name, id).getStats()+"\n```";
+		} else if (content.equals(".setup")) {
+			return "```http\n"+getHunter(name, id).getSetup()+"\n```";
 		}
 		return null;
 	}
